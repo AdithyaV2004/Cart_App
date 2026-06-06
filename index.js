@@ -100,12 +100,17 @@ function itemSummaryRender(){
     let addedItems=0
     items.map((item)=>{
         if(item.added){
+            const fulldetDiv=document.createElement("div");
             const detDiv=document.createElement("div");
             detDiv.setAttribute("id", "summaryEl");
             detDiv.innerHTML=`${item.name} - ${item.price}`;
             tPrice+=item.price
             addedItems+=1;
             addedItemsDiv.appendChild(detDiv);
+            const cancelButton=document.createElement("button");
+            cancelButton.innerHTML="Remove";
+            cancelButton.setAttribute("onclick",`remove(${item.id})`);
+            addedItemsDiv.appendChild(cancelButton);
         }        
     })
     const itemNos=document.createElement("p");
@@ -115,4 +120,13 @@ function itemSummaryRender(){
     const totPrice=document.createElement("div");
     totPrice.innerHTML=`Total Price:$ ${tPrice}`;
     itemSummaryDiv.appendChild(totPrice);
+}
+
+function remove(ind){
+    items.map((item)=>{
+        if(item.id==ind){
+            item.added=false;
+        }
+    })
+    render();
 }
